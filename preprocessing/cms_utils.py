@@ -1,5 +1,8 @@
 import numpy as np
 from sklearn.utils import murmurhash3_32
+CMS_WIDTH = 2000
+CMS_DEPTH = 5
+
 
 class CountMinSketch:
     def __init__(self, width, depth):

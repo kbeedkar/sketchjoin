@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 import argparse
-from cms_utils import CountMinSketch
+from cms_utils import CountMinSketch, CMS_WIDTH, CMS_DEPTH
 
 
 def construct_cms_from_dataset(dataset_path, dataset_name):
@@ -9,10 +9,6 @@ def construct_cms_from_dataset(dataset_path, dataset_name):
     os.makedirs(output_cms_folder, exist_ok=True)
 
     # Parameters for Count-Min Sketch
-    # number of buckets per hash functions
-    width = 2000
-    # number of hash functions
-    depth = 5
 
     file_id = 1
     for file in sorted(os.listdir(dataset_path)):
@@ -22,7 +18,7 @@ def construct_cms_from_dataset(dataset_path, dataset_name):
             column_id = 1
             for column in df.columns:
                 set_b = df[column].values
-                cms_b = CountMinSketch(width, depth)
+                cms_b = CountMinSketch(CMS_WIDTH, CMS_DEPTH)
                 # Build CMS for column B
                 for value in set_b:
                     if pd.isna(value) or value == "":
@@ -38,6 +34,7 @@ def construct_cms_from_dataset(dataset_path, dataset_name):
                 column_id += 1
             file_id += 1
         except Exception as e:
+            file_id += 1
             continue
 
 
