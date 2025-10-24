@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 import argparse
-from cms_utils import CountMinSketch, CMS_WIDTH, CMS_DEPTH
+from utils.cms_utils import CountMinSketch, CMS_WIDTH, CMS_DEPTH
 
 
 def construct_cms_from_dataset(dataset_path, dataset_name):

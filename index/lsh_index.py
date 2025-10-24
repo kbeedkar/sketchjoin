@@ -3,7 +3,8 @@ import math
 import argparse
 import csv
 from index.lsh_utils import build_lsh_index, find_optimal_bands
-from preprocessing.cms_utils import CMS_DEPTH
+from utils.utils import TOTAL_HASH_FUNCTIONS, PROBABILITY_OF_ERROR_LSH, THRESHOLD
+
 
 
 def create_lsh_index(total_hash_functions, dataset_name, probability_of_error_lsh, threshold):
@@ -55,10 +56,4 @@ if __name__ == "__main__":
     dataset_path = args.dataset_path
     dataset_name = args.dataset_name
 
-    error = 0.05
-    probability_of_error_minhash = 0.1
-    no_hash_function_per_row = (math.ceil((math.log(2/probability_of_error_minhash))/(2*error*error))+CMS_DEPTH-1)//CMS_DEPTH
-    total_hash_functions = no_hash_function_per_row * CMS_DEPTH
-    threshold = 0.7
-    probability_of_error_lsh = 0.05
-    create_lsh_index(total_hash_functions, dataset_name, probability_of_error_lsh, threshold=0.7)
+    create_lsh_index(TOTAL_HASH_FUNCTIONS, dataset_name, PROBABILITY_OF_ERROR_LSH, THRESHOLD)
