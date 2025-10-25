@@ -40,7 +40,7 @@ python discovery/LinearScan.py \
     --dataset_path path \
     --dataset_name Name
 ```
-This searches for all columns in the given dataset , having jaccard similarity greater or equal to the threshold set in **utils.py** to the "location" column in query.csv.
+This searches for all columns in the given dataset , having jaccard similarity greater or equal to the threshold set in **utils.py**, to the <column_name> column in query.csv.
 ## Module Description
 **1. Preprocessing Module** <br>
 
