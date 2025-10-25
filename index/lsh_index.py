@@ -1,10 +1,8 @@
 import os
-import math
 import argparse
 import csv
-from index.lsh_utils import build_lsh_index, find_optimal_bands
+from utils.lsh_utils import build_lsh_index, find_optimal_bands
 from utils.utils import TOTAL_HASH_FUNCTIONS, PROBABILITY_OF_ERROR_LSH, THRESHOLD
-
 
 
 def create_lsh_index(total_hash_functions, dataset_name, probability_of_error_lsh, threshold):

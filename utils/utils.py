@@ -8,7 +8,9 @@ PROBABILITY_OF_ERROR_MINHASH = 0.1
 HASH_FUNCTIONS_PER_ROW = (math.ceil((math.log(2/PROBABILITY_OF_ERROR_MINHASH))/(2*ERROR*ERROR))+CMS_DEPTH-1)//CMS_DEPTH
 TOTAL_HASH_FUNCTIONS = HASH_FUNCTIONS_PER_ROW * CMS_DEPTH
 THRESHOLD = 0.7
+EARLY_STOPPING_THRESHOLD = 0.13
 PROBABILITY_OF_ERROR_LSH = 0.05
+
 
 def actual_jaccard_similarity(set_a, set_b):
     set_a = [str(value) for value in set_a if pd.notna(value) and value != ""]

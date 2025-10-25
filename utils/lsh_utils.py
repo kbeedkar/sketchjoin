@@ -3,8 +3,10 @@ import hashlib
 import math
 import pickle
 
+
 def hash_band(band):
     return hashlib.md5(str(band).encode()).hexdigest()
+
 
 def build_lsh_index(signatures_dict, num_bands, dataset_name):
     lsh_index = defaultdict(set)
@@ -37,3 +39,16 @@ def find_optimal_bands(signature_size, threshold, probability_of_error_lsh):
         else:
             break
     return optimal_number_bands
+
+
+def find_similar_signatures(query_signature, num_bands, lsh_index):
+    similar_columns = set()
+    num_rows = len(query_signature) // num_bands
+
+    for band_idx in range(num_bands):
+        band = tuple(query_signature[band_idx * num_rows : (band_idx + 1) * num_rows])
+        # print(band)
+        band_hash = hash_band(band)
+        if(band_hash in lsh_index):
+            similar_columns.update(lsh_index[band_hash])
+    return similar_columns

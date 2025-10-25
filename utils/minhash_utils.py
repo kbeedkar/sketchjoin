@@ -39,3 +39,11 @@ def reduce_signature_size(input_minhash_folder, output_minhash_folder, sz):
         with open(output_path, 'w') as f:
             for row in reduced_signature:
                 f.write(' '.join(map(str, row)) + '\n')
+
+
+def cms_minhash_jaccard_similarity(sig1, sig2):
+    matches = 0
+    for j in range(len(sig1)):
+        if(sig1[j]==sig2[j]):
+            matches+=1
+    return matches/len(sig1)

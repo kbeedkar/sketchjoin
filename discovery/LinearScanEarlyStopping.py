@@ -2,8 +2,8 @@ import numpy as np
 import pandas as pd
 import os
 import argparse
-from utils.cms_utils import CountMinSketch, CMS_WIDTH, CMS_DEPTH, cms_jaccard_similarity
-from utils.utils import actual_jaccard_similarity, THRESHOLD
+from utils.cms_utils import CountMinSketch, CMS_WIDTH, CMS_DEPTH, cms_earlystopping_jaccard_similarity
+from utils.utils import actual_jaccard_similarity, THRESHOLD, EARLY_STOPPING_THRESHOLD
 
 
 if __name__ == "__main__":
@@ -30,7 +30,7 @@ if __name__ == "__main__":
 
     all_docs_id = []
     actual_doc_id = []
-    cms_doc_id = []
+    cms_earlystopping_doc_id = []
 
     file_id = 1
     for file in sorted(os.listdir(dataset_path)):
@@ -58,11 +58,11 @@ if __name__ == "__main__":
                 with open(input_path, 'r') as f:
                     for i, line in enumerate(f):
                         cms_b.table[i] = np.array(list(map(int, line.strip().split())))
-
-                # estimate cms jaccard similarity
-                cms_jaccard = cms_jaccard_similarity(query_cms, cms_b, CMS_DEPTH, CMS_WIDTH)
-                if cms_jaccard >= THRESHOLD:
-                    cms_doc_id.append(new_id)
+                
+                # cms sampling jaccard similarity
+                cms_sampling_jaccard = cms_earlystopping_jaccard_similarity(query_cms, cms_b, CMS_DEPTH, CMS_WIDTH, EARLY_STOPPING_THRESHOLD)
+                if cms_sampling_jaccard >= THRESHOLD:
+                    cms_earlystopping_doc_id.append(new_id)
 
                 column_id += 1
             file_id += 1
@@ -72,8 +72,8 @@ if __name__ == "__main__":
             continue
 
     print("\nSummary of Results:")
-    print("###################################### cms")
-    estimated_set = set(cms_doc_id)
+    print("###################################### cms sampling earlystopping")
+    estimated_set = set(cms_earlystopping_doc_id)
     actual_set = set(actual_doc_id)
     TP = len(estimated_set & actual_set)
     FP = len(estimated_set - actual_set)

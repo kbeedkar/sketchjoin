@@ -2,6 +2,7 @@ import numpy as np
 from sklearn.utils import murmurhash3_32
 CMS_WIDTH = 2000
 CMS_DEPTH = 5
+CMS_SAMPLE_RATIO = 0.5
 
 
 class CountMinSketch:

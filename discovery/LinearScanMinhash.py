@@ -1,9 +1,9 @@
-import numpy as np
 import pandas as pd
 import os
 import argparse
-from utils.cms_utils import CountMinSketch, CMS_WIDTH, CMS_DEPTH, cms_jaccard_similarity
-from utils.utils import actual_jaccard_similarity, THRESHOLD
+from utils.cms_utils import CountMinSketch, CMS_WIDTH, CMS_DEPTH
+from utils.minhash_utils import cms_minhash_jaccard_similarity, minhash_signature_weighted
+from utils.utils import actual_jaccard_similarity, THRESHOLD, HASH_FUNCTIONS_PER_ROW
 
 
 if __name__ == "__main__":
@@ -19,7 +19,7 @@ if __name__ == "__main__":
     dataset_path = args.dataset_path
     dataset_name = args.dataset_name
 
-    input_cms_folder = f"./cms_sketch/{dataset_name}"
+    input_minhash_folder = f"./minhash_signatures/{dataset_name}"
 
     query_data = pd.read_csv(f'{dataset_path}/{query_file}', header=0, low_memory=False)[query_column].values
     query_cms = CountMinSketch(CMS_WIDTH, CMS_DEPTH)
@@ -28,9 +28,11 @@ if __name__ == "__main__":
         else:
             query_cms.add(value)
 
+    query_signature = minhash_signature_weighted(query_cms, HASH_FUNCTIONS_PER_ROW, CMS_WIDTH, CMS_DEPTH)
+
     all_docs_id = []
     actual_doc_id = []
-    cms_doc_id = []
+    cms_minhash_doc_id = []
 
     file_id = 1
     for file in sorted(os.listdir(dataset_path)):
@@ -48,21 +50,22 @@ if __name__ == "__main__":
                 if actual_jaccard >= THRESHOLD:
                     actual_doc_id.append(new_id)
 
-                # cms sketch jaccard similarity
-                # read cms sketch from file
-                cms_b = CountMinSketch(CMS_WIDTH, CMS_DEPTH)
+                # cms minhash jaccard similarity
+                # read minhash signatures from file
                 file_safe_name = os.path.splitext(os.path.basename(file))[0]
                 input_filename = f"{file_safe_name}_{file_id}_{column_id}.txt"
-                input_path = os.path.join(input_cms_folder, input_filename)
+                input_path = os.path.join(input_minhash_folder, input_filename)
 
+                signature_b = []
                 with open(input_path, 'r') as f:
-                    for i, line in enumerate(f):
-                        cms_b.table[i] = np.array(list(map(int, line.strip().split())))
-
-                # estimate cms jaccard similarity
-                cms_jaccard = cms_jaccard_similarity(query_cms, cms_b, CMS_DEPTH, CMS_WIDTH)
-                if cms_jaccard >= THRESHOLD:
-                    cms_doc_id.append(new_id)
+                    for line in f:
+                        row = list(map(int, line.strip().split()))
+                        signature_b.extend(row)
+                
+                # estimate cms minhash jaccard similarity
+                cms_minhash_jaccard = cms_minhash_jaccard_similarity(query_signature, signature_b)
+                if cms_minhash_jaccard >= THRESHOLD:
+                    cms_minhash_doc_id.append(new_id)
 
                 column_id += 1
             file_id += 1
@@ -72,8 +75,8 @@ if __name__ == "__main__":
             continue
 
     print("\nSummary of Results:")
-    print("###################################### cms")
-    estimated_set = set(cms_doc_id)
+    print("###################################### cms minhash sampling")
+    estimated_set = set(cms_minhash_doc_id)
     actual_set = set(actual_doc_id)
     TP = len(estimated_set & actual_set)
     FP = len(estimated_set - actual_set)
