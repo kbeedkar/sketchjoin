@@ -43,9 +43,9 @@ python discovery/LinearScan.py \
 This searches for all columns in the given dataset , having jaccard similarity greater or equal to the threshold set in **utils.py** to the "location" column in query.csv.
 ## Module Description
 **1. Preprocessing Module**
-   ```
-   preprocessing/cms_construction.py
-   ```
+
+   **preprocessing/cms_construction.py**
+  
    Reads each CSV file in the dataset directory.For each column, creates a CMS data structure Matrix (depth × width).
    Adds each non-null value to the sketch using multiple hash functions and saves CMS tables to disk as text files.
    Usage:
@@ -54,35 +54,35 @@ This searches for all columns in the given dataset , having jaccard similarity g
      --dataset_path ./nyc_cleaned \
      --dataset_name nyc
    ```
-  preprocessing/minhash_construction.py
-  Reads CMS files created by cms_construction.py.For each CMS row, generates k hash functions.Implements weighted MinHash: elements with count c are hashed c times.Stores minimum hash value for each function and creates signature matrix (depth × k).
-  Usage:
+
+  **preprocessing/minhash_construction.py** <br>
+  
+  Reads CMS files created by cms_construction.py. For each CMS row, generates k hash functions.Implements weighted MinHash: elements with count c are hashed c times and then stores minimum hash value for each function and creates signature matrix (depth × k).
+  **Usage:**
   ```
   python preprocessing/minhash_construction.py \
      --dataset_path ./nyc_cleaned \
      --dataset_name nyc
  ```
 **2. Index Module**
-   index/lsh_index.py
+   **index/lsh_index.py**
     Builds Locality-Sensitive Hashing index for fast approximate nearest neighbor search.
    Usage
    ```
    python index/lsh_index.py \
-    --dataset_path ./nyc_cleaned/nyc_cleaned \
-    --dataset_name nyc
+    --dataset_path location \
+    --dataset_name name
    ```
-   index/lsh_utils.py
+   **index/lsh_utils.py**
     Utility functions for LSH index construction and band optimization.
    
    
 **3.Discovery Module**
- discovery/Linearscan.py
- Reads query column and builds its CMS and then Scans all columns in dataset.
- Computes both exact Jaccard and CMS-estimated Jaccard
- Identifies columns above similarity threshold
- Compares CMS results against ground truth
+ **discovery/Linearscan.py**
+ Reads query column and builds its CMS and then scans all columns in dataset.<br>
+ Computes both exact Jaccard and CMS-estimated Jaccard .Identifies columns above the similarity threshold and compares CMS results against ground truth.<br>
  Reports precision, recall, F1, and accuracy
- Usage:
+ **Usage:**
  ```
  python discovery/LinearScan.py \
      --query_file query.csv \
@@ -91,19 +91,19 @@ This searches for all columns in the given dataset , having jaccard similarity g
      --dataset_name nyc
  ```
 **4. Utils Module**
-   utils/cms_utils.py
-   Purpose: Count-Min Sketch implementation and Jaccard similarity estimation.
+   **utils/cms_utils.py**
+   Count-Min Sketch implementation and Jaccard similarity estimation.
    configuration:
    ```
    CMS_WIDTH = 2000  # Number of counters per hash function
    CMS_DEPTH = 5        # Number of hash functions
    ```
-   utils/minhash_utils.py
-   Purpose: MinHash signature generation and signature size reduction. <br>
+   **utils/minhash_utils.py**
+   Generates MinHash signature.
 **5. Utils.py** <br>
 
   Global configuration and helper functions. <br>
-  Configuration Parameters:<br>
+  **Configuration Parameters**:<br>
   ```
 ERROR = 0.05                         # Approximation error bound for MinHash
 
