@@ -19,6 +19,8 @@
 │   ├── minhash_utils.py           # MinHash utilities 
 │   └── utils.py                   # Configuration and helpers 
 └── README.md
+└──sketchJoin.ipynb
+
 ```
 ## Input Format 
 ### Dataset Format 
