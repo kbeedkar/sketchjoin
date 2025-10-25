@@ -100,9 +100,10 @@ This searches for all columns in the given dataset , having jaccard similarity g
    ```
    utils/minhash_utils.py
    Purpose: MinHash signature generation and signature size reduction. <br>
-**5. Utils.py**
-  Global configuration and helper functions.
-  Configuration Parameters:
+**5. Utils.py** <br>
+
+  Global configuration and helper functions. <br>
+  Configuration Parameters:<br>
   ```
 ERROR = 0.05                         # Approximation error bound for MinHash
 
