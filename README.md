@@ -37,7 +37,7 @@ Query files follow the same CSV format, and we specify the query column via   **
 python discovery/LinearScan.py \
     --query_file query.csv \
     --query_column column_name \
-    --dataset_path dataset_location \
+    --dataset_path path \
     --dataset_name Name
 ```
 This searches for all columns in the given dataset , having jaccard similarity greater or equal to the threshold set in **utils.py** to the "location" column in query.csv.
@@ -51,8 +51,8 @@ This searches for all columns in the given dataset , having jaccard similarity g
    Usage:
    ```
    python preprocessing/cms_construction.py \
-     --dataset_path ./nyc_cleaned \
-     --dataset_name nyc
+     --dataset_path path \
+     --dataset_name name
    ```
 
   **preprocessing/minhash_construction.py** <br>
@@ -61,8 +61,8 @@ This searches for all columns in the given dataset , having jaccard similarity g
   **Usage:**
   ```
   python preprocessing/minhash_construction.py \
-     --dataset_path ./nyc_cleaned \
-     --dataset_name nyc
+     --dataset_path path \
+     --dataset_name name
  ```
 **2. Index Module** <br>
    **index/lsh_index.py** <br>
@@ -70,7 +70,7 @@ This searches for all columns in the given dataset , having jaccard similarity g
    Usage
    ```
    python index/lsh_index.py \
-    --dataset_path location \
+    --dataset_path path \
     --dataset_name name
    ```
    **index/lsh_utils.py** <br>
@@ -86,9 +86,9 @@ This searches for all columns in the given dataset , having jaccard similarity g
  ```
  python discovery/LinearScan.py \
      --query_file query.csv \
-     --query_column city \
-     --dataset_path ./nyc_cleaned/nyc_cleaned \
-     --dataset_name nyc
+     --query_column column_name \
+     --dataset_path path \
+     --dataset_name name
  ```
 **4. Utils Module** <br>
    **utils/cms_utils.py** <br>
