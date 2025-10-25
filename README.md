@@ -99,7 +99,8 @@ This searches for all columns in the given dataset , having jaccard similarity g
    CMS_DEPTH = 5        # Number of hash functions
    ```
    **utils/minhash_utils.py** <br>
-   Generates MinHash signature.
+   Generates MinHash signature.<br>
+   
 **5. Utils.py** <br>
 
   Global configuration and helper functions. <br>
