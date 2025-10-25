@@ -1,0 +1,45 @@
+ijzq-5wy8.modes_used_june_bus.medium
+r5p4-2qap.18 PRINCIPAL.medium
+naib-xtez.a59_using_weapon_other_than.medium
+disc.A37 Intimidating and Bullying Behavior  S.medium
+2ps2-dsjr._05_principal.medium
+disc.A29 Gang Related Behavior R.medium
+45nu-yrf2.6 EXPULSIONS.medium
+kg6x-kv5b.10 REMOVALS.medium
+i6ky-n2wd._2_superintendent.medium
+9cvd-uyw6.ELL PRINCIPAL.medium
+disc.A52 Group Violence S.medium
+naib-xtez.a40_taking_property_without.medium
+t5qg-w9sq.B31 Scholastic Dishonesty R.medium
+64pu-zyr2.A36 Intimidating and Bullying Behavior R.medium
+naib-xtez.a34_coercion_threats_p.medium
+kcey-vehy.qsurveyzone_home.high
+g3xg-qtbc.approx_date_closed.high
+fx4z-5xg2.stop_question_frisk_complaint.high
+vc9v-wg6y.ell_arabic.high
+8nqg-ia7v.flag_mc.high
+iz2q-9x8d.total_est_fee.high
+jpcp-ic7c.qworktravelcode06.high
+x5tk-fa54.year_5_estimate.high
+uu87-uz8m.asc_contact_perp.high
+268n-a7em.local.high
+reri-chf8.grade_12.high
+6bqn-qdwq.tnc_mode.high
+ek6b-5n74.description_of_code.high
+4nft-bihw.tax_year.high
+n84m-kx4j.vehicle_engine_horsepower.high
+wcm8-aq5w.propane_use_kbtu.low
+4tys-3tzj.multifamily_housing_number.low
+njjd-3gve.q21_r4_c2.low
+utpj-74fz.retail_store_number_of_open.low
+m8p6-tp4b.yrb_rng.low
+utpj-74fz.percent_of_electricity_that.low
+f33j-ecpr.q21_r1_c2.low
+nbun-wekj.municipally_supplied_potable_1.low
+yr5p-wjer.stadium_closed_gross_floor.low
+yr5p-wjer.worship_facility_gross_floor.low
+njjd-3gve.q20_r7_c4.low
+wa2y-rh4b.noncity_yr1_plan.low
+wcm8-aq5w.percent_of_electricity_that.low
+6e44-8i2s.larceny_or_other_theft_with_weapon_s.low
+utpj-74fz.bank_branch_number_of.low
