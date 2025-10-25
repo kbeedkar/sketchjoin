@@ -103,10 +103,10 @@ This searches for all columns in the given dataset , having jaccard similarity g
    **utils/minhash_utils.py** <br>
    Generates MinHash signature.<br>
    
-**5. Utils.py** <br>
+   **utils/Utils.py** <br>
 
-  Global configuration and helper functions. <br>
-  **Configuration Parameters**:<br>
+   Global configuration and helper functions. <br>
+   **Configuration Parameters**:<br>
   ```
 ERROR = 0.05                         # Approximation error bound for MinHash
 
