@@ -3,7 +3,7 @@
 DATASET_PATH="$1"
 DATASET_NAME="$2"
 SCRIPT="../discovery/SketchJoin.py"  # Replace with your actual script
-QUERY_FILE="queries/${DATASET_NAME}.txt"
+QUERY_FILE="../queries/${DATASET_NAME}.txt"
 
 # Check for query file
 if [ ! -f "$QUERY_FILE" ]; then
