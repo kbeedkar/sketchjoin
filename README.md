@@ -103,7 +103,7 @@ This searches for all columns in the given dataset , having jaccard similarity g
    **utils/minhash_utils.py** <br>
    Generates MinHash signature.<br>
    
-   **utils/Utils.py** <br>
+   **utils/utils.py** <br>
 
    Global configuration and helper functions. <br>
    **Configuration Parameters**:<br>
