@@ -26,7 +26,7 @@ The system expects datasets as  comma-separated CSVs  in the following format:
 ├── file1.csv
 ├── file2.csv
 ├── file3.csv
-└── ... ```
+└── ...```
 ### Query Format
 Query files follow the same CSV format, and we specify the query column via   **-- query_column** parameter.
 ### Query Command 
