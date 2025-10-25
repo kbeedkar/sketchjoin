@@ -42,7 +42,7 @@ python discovery/LinearScan.py \
 ```
 This searches for all columns in the given dataset , having jaccard similarity greater or equal to the threshold set in **utils.py** to the "location" column in query.csv.
 ## Module Description
-1. Preprocessing Module
+**1. Preprocessing Module**
    ```
    preprocessing/cms_construction.py
    ```
@@ -62,7 +62,7 @@ This searches for all columns in the given dataset , having jaccard similarity g
      --dataset_path ./nyc_cleaned \
      --dataset_name nyc
  ```
-2. Index Module
+**2. Index Module**
    index/lsh_index.py
     Builds Locality-Sensitive Hashing index for fast approximate nearest neighbor search.
    Usage
@@ -75,51 +75,51 @@ This searches for all columns in the given dataset , having jaccard similarity g
     Utility functions for LSH index construction and band optimization.
    
    
-3.Discovery Module 
-discovery/Linearscan.py
-Reads query column and builds its CMS nd then Scans all columns in dataset.
-Computes both exact Jaccard and CMS-estimated Jaccard
-Identifies columns above similarity threshold
-Compares CMS results against ground truth
-Reports precision, recall, F1, and accuracy
-Usage:
-```
-python discovery/LinearScan.py \
-    --query_file query.csv \
-    --query_column city \
-    --dataset_path ./nyc_cleaned/nyc_cleaned \
-    --dataset_name nyc
-```
-4. Utils Module
+**3.Discovery Module**
+ discovery/Linearscan.py
+ Reads query column and builds its CMS and then Scans all columns in dataset.
+ Computes both exact Jaccard and CMS-estimated Jaccard
+ Identifies columns above similarity threshold
+ Compares CMS results against ground truth
+ Reports precision, recall, F1, and accuracy
+ Usage:
+ ```
+ python discovery/LinearScan.py \
+     --query_file query.csv \
+     --query_column city \
+     --dataset_path ./nyc_cleaned/nyc_cleaned \
+     --dataset_name nyc
+ ```
+**4. Utils Module**
    utils/cms_utils.py
    Purpose: Count-Min Sketch implementation and Jaccard similarity estimation.
    configuration:
    ```
    CMS_WIDTH = 2000  # Number of counters per hash function
-CMS_DEPTH = 5        # Number of hash functions
-```
-utils/minhash_utils.py
-Purpose: MinHash signature generation and signature size reduction.
-5.Utils.py
-Global configuration and helper functions.
-Configuration Parameters:
-```
-      
-ERROR = 0.05                         # Approximation error bound for MinHash
-
-
-PROBABILITY_OF_ERROR_MINHASH = 0.1  # Probability of exceeding error bound
-
-
-THRESHOLD = 0.7                     # Jaccard similarity threshold for retrieval
-
-
-PROBABILITY_OF_ERROR_LSH = 0.05    # LSH false negative probability
-
-# Computed parameters
-CMS_DEPTH = 5  # from cms_utils
-HASH_FUNCTIONS_PER_ROW = ⌈log(2/0.1) / (2*0.05²)⌉ / 5
-TOTAL_HASH_FUNCTIONS = HASH_FUNCTIONS_PER_ROW × 5
-```
+   CMS_DEPTH = 5        # Number of hash functions
+   ```
+   utils/minhash_utils.py
+   Purpose: MinHash signature generation and signature size reduction.
+**5. Utils.py**
+  Global configuration and helper functions.
+  Configuration Parameters:
+  ```
+        
+  ERROR = 0.05                         # Approximation error bound for MinHash
+  
+  
+  PROBABILITY_OF_ERROR_MINHASH = 0.1  # Probability of exceeding error bound
+  
+  
+  THRESHOLD = 0.7                     # Jaccard similarity threshold for retrieval
+  
+  
+  PROBABILITY_OF_ERROR_LSH = 0.05    # LSH false negative probability
+  
+  # Computed parameters
+  CMS_DEPTH = 5  # from cms_utils
+  HASH_FUNCTIONS_PER_ROW = ⌈log(2/0.1) / (2*0.05²)⌉ / 5
+  TOTAL_HASH_FUNCTIONS = HASH_FUNCTIONS_PER_ROW × 5
+  ```
 
 
