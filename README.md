@@ -99,27 +99,26 @@ This searches for all columns in the given dataset , having jaccard similarity g
    CMS_DEPTH = 5        # Number of hash functions
    ```
    utils/minhash_utils.py
-   Purpose: MinHash signature generation and signature size reduction.
+   Purpose: MinHash signature generation and signature size reduction. <br>
 **5. Utils.py**
   Global configuration and helper functions.
   Configuration Parameters:
   ```
-        
-  ERROR = 0.05                         # Approximation error bound for MinHash
-  
-  
-  PROBABILITY_OF_ERROR_MINHASH = 0.1  # Probability of exceeding error bound
-  
-  
-  THRESHOLD = 0.7                     # Jaccard similarity threshold for retrieval
-  
-  
-  PROBABILITY_OF_ERROR_LSH = 0.05    # LSH false negative probability
-  
-  # Computed parameters
-  CMS_DEPTH = 5  # from cms_utils
-  HASH_FUNCTIONS_PER_ROW = ⌈log(2/0.1) / (2*0.05²)⌉ / 5
-  TOTAL_HASH_FUNCTIONS = HASH_FUNCTIONS_PER_ROW × 5
+ERROR = 0.05                         # Approximation error bound for MinHash
+
+
+PROBABILITY_OF_ERROR_MINHASH = 0.1  # Probability of exceeding error bound
+
+
+THRESHOLD = 0.7                     # Jaccard similarity threshold for retrieval
+
+
+PROBABILITY_OF_ERROR_LSH = 0.05    # LSH false negative probability
+
+# Computed parameters
+CMS_DEPTH = 5  # from cms_utils
+HASH_FUNCTIONS_PER_ROW = ⌈log(2/0.1) / (2*0.05²)⌉ / 5
+TOTAL_HASH_FUNCTIONS = HASH_FUNCTIONS_PER_ROW × 5
   ```
 
 
