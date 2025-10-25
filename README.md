@@ -5,18 +5,18 @@
 ```pip install numpy pandas scikit-learn```
 ## Directory Structure
 .
-├── preprocessing/
-│   ├── cms_construction.py       # Build CMS for each column
-│   └── minhash_construction.py   # Generate MinHash signatures
+├── preprocessing/ <br>
+│   ├── cms_construction.py       # Build CMS for each column <br>
+│   └── minhash_construction.py   # Generate MinHash signatures <br>
 ├── index/
-│   ├── lsh_index.py              # Build LSH index
-│   └── lsh_utils.py              # LSH utilities
+│   ├── lsh_index.py              # Build LSH index <br>
+│   └── lsh_utils.py              # LSH utilities <br>
 ├── discovery/
-│   └── LinearScan.py             # Query processing and evaluation
+│   └── LinearScan.py             # Query processing and evaluation <br>
 ├── utils/
-│   ├── cms_utils.py              # CMS implementation
-│   ├── minhash_utils.py          # MinHash utilities
-│   └── utils.py                  # Configuration and helpers
+│   ├── cms_utils.py              # CMS implementation <br>
+│   ├── minhash_utils.py          # MinHash utilities <br>
+│   └── utils.py                  # Configuration and helpers <br>
 └── README.md
 
 ## Input Format 
