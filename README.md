@@ -2,29 +2,38 @@
 ## Installation
 ### Requirements
 
-```pip install numpy pandas scikit-learn```
+```pip install numpy pandas scikit-learn pickle```
 ## Directory Structure 
 ```
 . 
 ├── preprocessing/ 
-│   ├── cms_construction.py        # Build CMS for each column 
-│   └── minhash_construction.py    # Generate MinHash signatures 
+│   ├── cms_construction.py        # Build CMS over each dataset column 
+│   └── minhash_construction.py    # Generate MinHash signatures over CMS
 ├── index/
 │   ├── lsh_index.py               # Build LSH index 
-│   └── lsh_utils.py               # LSH utilities 
 ├── discovery/
-│   └── LinearScan.py              # Query processing and evaluation 
+│   ├── LinearScan.py              # LinearScan
+│   ├── LinearScanSampling.py      # LinearScan with uniform sampling
+│   ├── LinearScanEarlystopping.py # LinearScan with earlystopping
+│   ├── LinearScanMinhash.py       # LinearScan with minhash sampling
+│   └── SketchJoin.py              # SketchJoin
 ├── utils/
-│   ├── cms_utils.py               # CMS implementation 
+│   ├── cms_utils.py               # CMS utilities
 │   ├── minhash_utils.py           # MinHash utilities 
-│   └── utils.py                   # Configuration and helpers 
+│   ├── utils.py                   # Configuration and general helpers
+|   └── lsh_utils.py               # LSH index utilities
+├── experiments/
+│   ├── run_queries.sh             # script to run multiple queries in parallel for SketchJoin
+│   ├── run_scalability.sh         # script to run scalability experiment
+|   └── scalability/               # scalability over dataset
+|       ├── scalability.py
 └── README.md
 └──sketchJoin.ipynb
 
 ```
 ## Input Format 
 ### Dataset Format 
-The system expects datasets as  comma-separated CSVs  in the following format:
+The system expects datasets as dataset CSVs in the following format:
  ```
 dataset_folder/
 ├── file1.csv
@@ -36,7 +45,7 @@ dataset_folder/
 Query files follow the same CSV format, and we specify the query column via   **-- query_column** parameter.
 ### Query Command 
 ```
-python discovery/LinearScan.py \
+python discovery/SketchJoin.py \
     --query_file query.csv \
     --query_column column_name \
     --dataset_path path \
@@ -48,8 +57,7 @@ This searches for all columns in the given dataset , having jaccard similarity g
 
    **preprocessing/cms_construction.py** <br>
   
-   Reads each CSV file in the dataset directory.For each column, creates a CMS data structure Matrix (depth × width).
-   Adds each non-null value to the sketch using multiple hash functions and saves CMS tables to disk as text files.
+   Creates CMS sketch (depth × width) over all dataset. Only uses non empty values for CMS construction.
    Usage:
    ```
    python preprocessing/cms_construction.py \
@@ -59,7 +67,7 @@ This searches for all columns in the given dataset , having jaccard similarity g
 
   **preprocessing/minhash_construction.py** <br>
   
-  Reads CMS files created by cms_construction.py. For each CMS row, generates k hash functions.Implements weighted MinHash: elements with count c are hashed c times and then stores minimum hash value for each function and creates signature matrix (depth × k).
+  Generates weighted minhash signature over CMS. Implements Weighted MinHash: elements with count c are hashed c times.
   **Usage:**
   ```
   python preprocessing/minhash_construction.py \
@@ -68,25 +76,21 @@ This searches for all columns in the given dataset , having jaccard similarity g
  ```
 **2. Index Module** <br>
    **index/lsh_index.py** <br>
-    Builds Locality-Sensitive Hashing index for fast approximate nearest neighbor search. <br>
+    Builds LSH index for fast approximate nearest neighbor search. <br>
    Usage
    ```
    python index/lsh_index.py \
     --dataset_path path \
     --dataset_name name
    ```
-   **index/lsh_utils.py** <br>
-    Utility functions for LSH index construction and band optimization.
    
    
 **3.Discovery Module** <br>
- **discovery/Linearscan.py** <br>
- Reads query column and builds its CMS and then scans all columns in dataset.<br>
- Computes both exact Jaccard and CMS-estimated Jaccard .Identifies columns above the similarity threshold and compares CMS results against ground truth.<br>
- Reports precision, recall, F1, and accuracy.<br>
+ **discovery/SketchJoin.py** <br>
+ Simulates SketchJoin, given the query dataset and search dataset.<br>
  **Usage:**
  ```
- python discovery/LinearScan.py \
+ python discoverySketchJoin.py \
      --query_file query.csv \
      --query_column column_name \
      --dataset_path path \
@@ -94,20 +98,24 @@ This searches for all columns in the given dataset , having jaccard similarity g
  ```
 **4. Utils Module** <br>
    **utils/cms_utils.py** <br>
-   Count-Min Sketch implementation and Jaccard similarity estimation.
+   Utilities and parameters for CMS sketch.
    configuration:
    ```
    CMS_WIDTH = 2000  # Number of counters per hash function
    CMS_DEPTH = 5        # Number of hash functions
    ```
    **utils/minhash_utils.py** <br>
-   Generates MinHash signature.<br>
+   Utility functions for Minhash signature.<br>
    
    **utils/utils.py** <br>
 
-   Global configuration and helper functions. <br>
+   Global configuration and general helper functions. <br>
    **Configuration Parameters**:<br>
+
+   **utils/lsh_utils.py** <br>
+    Utility functions for LSH index construction and band optimization.
   ```
+  
 ERROR = 0.05                         # Approximation error bound for MinHash
 
 
