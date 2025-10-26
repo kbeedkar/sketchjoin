@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DATASET_PATH="$1"
-DATASET_NAME="$2"  # Passed as first argument
+DATASET_NAME="$2"
 SCRIPT="scalability/scalability.py"  # Replace with your actual script
 QUERY_FILE="../queries/${DATASET_NAME}.txt"
 
