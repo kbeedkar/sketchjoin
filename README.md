@@ -132,5 +132,13 @@ CMS_DEPTH = 5  # from cms_utils
 HASH_FUNCTIONS_PER_ROW = ⌈log(2/0.1) / (2*0.05²)⌉ / 5
 TOTAL_HASH_FUNCTIONS = HASH_FUNCTIONS_PER_ROW × 5
   ```
-
-
+## Experiments
+** Usage: **
+   ```
+   python experiments/scalability/scalability.py \
+     --query_file query.csv \
+     --query_column column_name \
+     --dataset_path path \
+     --dataset_name name
+   ```
+experiments/run_queries.sh and experiments/run_scalability.sh can be used to run multiple queries in parallel.
