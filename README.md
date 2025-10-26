@@ -49,9 +49,25 @@ python discovery/SketchJoin.py \
     --query_file query.csv \
     --query_column column_name \
     --dataset_path path \
-    --dataset_name Name
+    --dataset_name name
 ```
 This searches for all columns in the given dataset , having jaccard similarity greater or equal to the threshold set in **utils.py**, to the <column_name> column in query.csv.
+In order to run this online part - these individual offline commands need to be run in order - 
+
+``` python preprocessing/cms_construction.py \
+    --dataset_path path \
+    --dataset_name name
+```
+```
+python preprocessing/minhash_construction.py \
+    --dataset_path path \
+    --dataset_name name
+```
+```
+python index/lsh_index.py \
+    --dataset_path path \
+    --dataset_name name
+```
 ## Module Description
 **1. Preprocessing Module** <br>
 
