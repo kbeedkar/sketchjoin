@@ -76,9 +76,9 @@ if __name__ == "__main__":
     with open(f'lsh_index_{dataset_name}.pkl', 'rb') as f:
         lsh_index = pickle.load(f)
     num_bands = find_optimal_bands(TOTAL_HASH_FUNCTIONS, THRESHOLD, PROBABILITY_OF_ERROR_LSH)
-    candidate_doc_ids = find_similar_signatures(query_signature, num_bands, lsh_index)
+    candidate_doc_ids = find_similar_signatures(query_signature[0], num_bands, lsh_index)
     for id in candidate_doc_ids:
-        estimated_jaccard_similarity = cms_minhash_jaccard_similarity(query_signature, minhash_signatures[id])
+        estimated_jaccard_similarity = cms_minhash_jaccard_similarity(query_signature[0], minhash_signatures[id])
         if estimated_jaccard_similarity > THRESHOLD:
             cms_minhash_lsh_doc_id.append(id)
 
@@ -105,3 +105,4 @@ if __name__ == "__main__":
     print (f"Recall: {recall:.6f}")
     print (f"F1 Score: {f1:.6f}")
     print (f"Accuracy: {accuracy:.6f}")
+
