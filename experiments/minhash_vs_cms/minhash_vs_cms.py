@@ -9,7 +9,6 @@ from utils.minhash_vs_cms_utils import (
     minhash_signature_weighted,
     estimate_jaccard,
     calculate_size
-    
 )
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Compare CMS and MinHash performance")
@@ -53,11 +52,6 @@ if __name__ == "__main__":
             "jaccard_similarity": actual_jaccard
     })
         
-        
-
-   
-  
-
     for i in range(len(cms_configs)):  
         size=0
 
