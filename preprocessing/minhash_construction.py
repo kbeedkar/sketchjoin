@@ -3,7 +3,7 @@ import pandas as pd
 import math
 import os
 import argparse
-from utils.minhash_utils import minhash_signature_weighted
+from utils.minhash_utils import minhash_signature_weighted_list
 from utils.cms_utils import CountMinSketch, CMS_DEPTH, CMS_WIDTH
 from utils.utils import HASH_FUNCTIONS_PER_ROW
 
@@ -29,7 +29,7 @@ def construct_minhash_over_cms(dataset_path, dataset_name):
                     for i, line in enumerate(f):
                         cms.table[i] = np.array(list(map(int, line.strip().split())))
 
-                signature_b = minhash_signature_weighted(cms, HASH_FUNCTIONS_PER_ROW, CMS_WIDTH, CMS_DEPTH)
+                signature_b = minhash_signature_weighted_list(cms, HASH_FUNCTIONS_PER_ROW, CMS_WIDTH, CMS_DEPTH)
 
                 output_filename = input_filename
                 output_path = os.path.join(output_minhash_folder, output_filename)

@@ -2,7 +2,7 @@ import pandas as pd
 import os
 import argparse
 from utils.cms_utils import CountMinSketch, CMS_WIDTH, CMS_DEPTH
-from utils.minhash_utils import cms_minhash_jaccard_similarity, minhash_signature_weighted
+from utils.minhash_utils import cms_minhash_jaccard_similarity, minhash_signature_weighted_concatenated
 from utils.lsh_utils import find_similar_signatures, find_optimal_bands
 from utils.utils import actual_jaccard_similarity, THRESHOLD, HASH_FUNCTIONS_PER_ROW, TOTAL_HASH_FUNCTIONS, PROBABILITY_OF_ERROR_LSH
 import pickle
@@ -30,7 +30,7 @@ if __name__ == "__main__":
         else:
             query_cms.add(value)
 
-    query_signature = minhash_signature_weighted(query_cms, HASH_FUNCTIONS_PER_ROW, CMS_WIDTH, CMS_DEPTH)
+    query_signature = minhash_signature_weighted_concatenated(query_cms, HASH_FUNCTIONS_PER_ROW, CMS_WIDTH, CMS_DEPTH)
 
     all_docs_id = []
     actual_doc_id = []
@@ -76,9 +76,9 @@ if __name__ == "__main__":
     with open(f'lsh_index_{dataset_name}.pkl', 'rb') as f:
         lsh_index = pickle.load(f)
     num_bands = find_optimal_bands(TOTAL_HASH_FUNCTIONS, THRESHOLD, PROBABILITY_OF_ERROR_LSH)
-    candidate_doc_ids = find_similar_signatures(query_signature[0], num_bands, lsh_index)
+    candidate_doc_ids = find_similar_signatures(query_signature, num_bands, lsh_index)
     for id in candidate_doc_ids:
-        estimated_jaccard_similarity = cms_minhash_jaccard_similarity(query_signature[0], minhash_signatures[id])
+        estimated_jaccard_similarity = cms_minhash_jaccard_similarity(query_signature, minhash_signatures[id])
         if estimated_jaccard_similarity > THRESHOLD:
             cms_minhash_lsh_doc_id.append(id)
 
@@ -105,4 +105,3 @@ if __name__ == "__main__":
     print (f"Recall: {recall:.6f}")
     print (f"F1 Score: {f1:.6f}")
     print (f"Accuracy: {accuracy:.6f}")
-

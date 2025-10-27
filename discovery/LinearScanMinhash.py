@@ -2,7 +2,7 @@ import pandas as pd
 import os
 import argparse
 from utils.cms_utils import CountMinSketch, CMS_WIDTH, CMS_DEPTH
-from utils.minhash_utils import cms_minhash_jaccard_similarity, minhash_signature_weighted
+from utils.minhash_utils import cms_minhash_jaccard_similarity, minhash_signature_weighted_concatenated
 from utils.utils import actual_jaccard_similarity, THRESHOLD, HASH_FUNCTIONS_PER_ROW
 
 
@@ -28,7 +28,7 @@ if __name__ == "__main__":
         else:
             query_cms.add(value)
 
-    query_signature = minhash_signature_weighted(query_cms, HASH_FUNCTIONS_PER_ROW, CMS_WIDTH, CMS_DEPTH)
+    query_signature = minhash_signature_weighted_concatenated(query_cms, HASH_FUNCTIONS_PER_ROW, CMS_WIDTH, CMS_DEPTH)
 
     all_docs_id = []
     actual_doc_id = []

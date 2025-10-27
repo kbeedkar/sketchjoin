@@ -2,7 +2,7 @@ from sklearn.utils import murmurhash3_32
 import os
 
 
-def minhash_signature_weighted(cms, num_hashes, width, depth):
+def minhash_signature_weighted_list(cms, num_hashes, width, depth):
     signatures = []
     for j in range(depth):
         signature = []
@@ -17,6 +17,21 @@ def minhash_signature_weighted(cms, num_hashes, width, depth):
             signature.append(min_val)
         signatures.append(signature)
     return signatures
+
+
+def minhash_signature_weighted_concatenated(cms, num_hashes, width, depth):
+    signature = []
+    for j in range(depth):
+        for i in range(num_hashes):
+            hash_vals = []
+            for elem in range(1, width + 1):
+                weight = cms.table[j][elem - 1]
+                for k in range(weight):
+                    hash_vals.append(murmurhash3_32(f"{elem}_{k}", seed=i))
+            
+            min_val = min(hash_vals) if hash_vals else 0  # Avoid empty case
+            signature.append(min_val)
+    return signature
 
 
 def reduce_signature_size(input_minhash_folder, output_minhash_folder, sz):
