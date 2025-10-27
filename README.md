@@ -22,6 +22,7 @@
 │   ├── minhash_utils.py           # MinHash utilities 
 │   ├── utils.py                   # Configuration and general helpers
 |   └── lsh_utils.py               # LSH index utilities
+|   └──  minhash_vs_cms_utils.py   # Minhash Vs cms experiment utilities
 ├── experiments/
 │   ├── run_queries.sh             # script to run multiple queries in parallel for SketchJoin
 │   ├── run_scalability.sh         # script to run scalability experiment
