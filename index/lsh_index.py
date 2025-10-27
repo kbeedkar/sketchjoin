@@ -42,7 +42,7 @@ def create_lsh_index(total_hash_functions, dataset_name, probability_of_error_ls
             continue
 
     num_bands = find_optimal_bands(total_hash_functions, threshold, probability_of_error_lsh)
-    build_lsh_index(minhash_signatures, num_bands)
+    build_lsh_index(minhash_signatures, num_bands , dataset_name)
 
 
 if __name__ == "__main__":
@@ -53,5 +53,6 @@ if __name__ == "__main__":
 
     dataset_path = args.dataset_path
     dataset_name = args.dataset_name
+
 
     create_lsh_index(TOTAL_HASH_FUNCTIONS, dataset_name, PROBABILITY_OF_ERROR_LSH, THRESHOLD)
