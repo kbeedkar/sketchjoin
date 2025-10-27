@@ -27,8 +27,11 @@
 │   ├── run_scalability.sh         # script to run scalability experiment
 |   └── scalability/               # scalability over dataset
 |       ├── scalability.py
+|   └── minhash_vs_cms
+|       ├── minhash_vs_cms.py     # script to compare cms with minhash given two columns.
+
 └── README.md
-└──sketchJoin.ipynb
+└──sketchJoin.ipynb               # notebook for quick start
 
 ```
 ## Input Format 
