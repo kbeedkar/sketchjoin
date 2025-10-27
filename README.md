@@ -129,7 +129,7 @@ python index/lsh_index.py \
    **utils/utils.py** <br>
 
    Global configuration and general helper functions. <br>
-   **Configuration Parameters**:<br>
+   ## **Configuration Parameters**:<br>
 
    **utils/lsh_utils.py** <br>
     Utility functions for LSH index construction and band optimization.
@@ -152,7 +152,7 @@ HASH_FUNCTIONS_PER_ROW = ⌈log(2/0.1) / (2*0.05²)⌉ / 5
 TOTAL_HASH_FUNCTIONS = HASH_FUNCTIONS_PER_ROW × 5
   ```
 ## Experiments
-** Usage: **
+**Usage:**
    ```
    python experiments/scalability/scalability.py \
      --query_file query.csv \
