@@ -95,4 +95,13 @@ if __name__ == "__main__":
     precision = TP / (TP + FP) if (TP + FP) > 0 else 0.0
     recall = TP / (TP + FN) if (TP + FN) > 0 else 0.0
     f1 = 2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0.0
+
     accuracy = (TP + TN) / (TP + FP + FN + TN) if (TP + FP + FN + TN) > 0 else 0.0
+    print (f"True Positives: {TP}")
+    print (f"False Positives: {FP}")    
+    print (f"False Negatives: {FN}")
+    print (f"True Negatives: {TN}")
+    print (f"Precision: {precision:.6f}")
+    print (f"Recall: {recall:.6f}")
+    print (f"F1 Score: {f1:.6f}")
+    print (f"Accuracy: {accuracy:.6f}")
