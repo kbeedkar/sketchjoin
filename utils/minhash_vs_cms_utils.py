@@ -24,7 +24,6 @@ class CountMinSketch:
         total_intersection = 0
         total_union = 0
         union =0
-       
         arr1 = np.ascontiguousarray(self.table.ravel())
         arr2 = np.ascontiguousarray(other.table.ravel())
         time1 = time.time()
@@ -39,14 +38,13 @@ class CountMinSketch:
         time2=f"{time2:.6f}"
         total_union = self.depth*(size)-total_intersection
         return total_intersection ,total_union ,time2
+        
 def weighted_jaccard_similarity(cms_a, cms_b,size):
-
-    numerator , denominator ,time1= cms_a.intersection_union(cms_b,size)
+    numerator,denominator,time1= cms_a.intersection_union(cms_b,size)
     print(f"Weighted Jaccard similarity: {numerator} / {denominator} ")
-    return numerator / denominator if denominator > 0 else 0.0 , time1
+    return numerator/denominator if denominator > 0 else 0.0 , time1
 
 def minhash_signature_weighted(counts, num_hashes):
-   
     signature = []
     for i in range(num_hashes):
         hash_vals = []
@@ -61,7 +59,6 @@ def minhash_signature_weighted(counts, num_hashes):
  
 def estimate_jaccard(sig1, sig2):
     matches =0
-   
     sig1 = np.ascontiguousarray(sig1)
     sig2 = np.ascontiguousarray(sig2)
     time1=time.time()
@@ -70,7 +67,6 @@ def estimate_jaccard(sig1, sig2):
         b=sig2[i]
         if a == b:
             matches += 1
-     
     time2=time.time()-time1
     time2=f"{time2:.6f}"
     print(f"MinHash Jaccard similarity: {matches} / {len(sig1)} : jaccard = {matches / len(sig1)}")
@@ -92,11 +88,8 @@ def actual_jaccard_similarity(set_a, set_b):
     set_b = [value for value in set_b if pd.notna(value) and value != ""]
     freq_a = Counter(set_a)
     freq_b = Counter(set_b)
-   
     union_keys = set(freq_a.keys()).union(set(freq_b.keys()))
-   
     numerator = sum(min(freq_a.get(key,0), freq_b.get(key,0)) for key in union_keys)
     denominator = sum(max(freq_a.get(key, 0), freq_b.get(key, 0)) for key in union_keys)
-   
     return numerator / denominator if denominator > 0 else 0.0
  
