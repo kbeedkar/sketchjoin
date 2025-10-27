@@ -6,7 +6,7 @@ import random
 import pickle
 import time
 from utils.cms_utils import CountMinSketch, CMS_WIDTH, CMS_DEPTH
-from utils.minhash_utils import minhash_signature_weighted, cms_minhash_jaccard_similarity
+from utils.minhash_utils import minhash_signature_weighted_concatenated, cms_minhash_jaccard_similarity
 from utils.utils import HASH_FUNCTIONS_PER_ROW, THRESHOLD, PROBABILITY_OF_ERROR_LSH, TOTAL_HASH_FUNCTIONS
 from utils.lsh_utils import find_optimal_bands, build_lsh_index, find_similar_signatures
 
@@ -33,7 +33,7 @@ if __name__ == "__main__":
         else:
             query_cms.add(value)
     
-    query_signature = minhash_signature_weighted(query_cms, HASH_FUNCTIONS_PER_ROW, CMS_WIDTH, CMS_DEPTH)
+    query_signature = minhash_signature_weighted_concatenated(query_cms, HASH_FUNCTIONS_PER_ROW, CMS_WIDTH, CMS_DEPTH)
 
     cms_minhash_lsh_times = []
     sampling_fractions = [0.25,0.5,0.75,1.0]
@@ -68,7 +68,7 @@ if __name__ == "__main__":
             file_id += 1
 
         num_bands = find_optimal_bands(TOTAL_HASH_FUNCTIONS, THRESHOLD, PROBABILITY_OF_ERROR_LSH)
-        build_lsh_index(minhash_signatures, num_bands)
+        build_lsh_index(minhash_signatures, num_bands, dataset_name)
         with open(f'lsh_index_{dataset_name}.pkl', 'rb') as f:
             lsh_index = pickle.load(f)
         start_time = time.time()
