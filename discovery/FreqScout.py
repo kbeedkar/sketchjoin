@@ -83,7 +83,7 @@ if __name__ == "__main__":
             cms_minhash_lsh_doc_id.append(id)
 
     print("\nSummary of Results:")
-    print("###################################### sketchjoin")
+    print("###################################### FreqScout")
     estimated_set = set(cms_minhash_lsh_doc_id)
     actual_set = set(actual_doc_id)
     TP = len(estimated_set & actual_set)
