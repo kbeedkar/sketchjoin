@@ -1,4 +1,4 @@
-# SketchJoin
+# FreqScout
 ## Installation
 ### Requirements
 
@@ -16,7 +16,7 @@
 │   ├── LinearScanSampling.py      # LinearScan with uniform sampling
 │   ├── LinearScanEarlystopping.py # LinearScan with earlystopping
 │   ├── LinearScanMinhash.py       # LinearScan with minhash sampling
-│   └── SketchJoin.py              # SketchJoin
+│   └── FreqScout.py              # FreqScout
 ├── utils/
 │   ├── cms_utils.py               # CMS utilities
 │   ├── minhash_utils.py           # MinHash utilities 
@@ -24,7 +24,7 @@
 |   └── lsh_utils.py               # LSH index utilities
 |   └──  minhash_vs_cms_utils.py   # Minhash Vs cms experiment utilities
 ├── experiments/
-│   ├── run_queries.sh             # script to run multiple queries in parallel for SketchJoin
+│   ├── run_queries.sh             # script to run multiple queries in parallel for FreqScout
 │   ├── run_scalability.sh         # script to run scalability experiment
 |   └── scalability/               # scalability over dataset
 |       ├── scalability.py
@@ -32,7 +32,7 @@
 |       ├── minhash_vs_cms.py     # script to compare cms with minhash given two columns.
 
 └── README.md
-└──sketchJoin.ipynb               # notebook for quick start
+└──FreqScout.ipynb               # notebook for quick start
 
 ```
 ## Input Format 
@@ -49,7 +49,7 @@ dataset_folder/
 Query files follow the same CSV format, and we specify the query column via   **-- query_column** parameter.
 ### Query Command 
 ```
-python discovery/SketchJoin.py \
+python discovery/FreqScout.py \
     --query_file query.csv \
     --query_column column_name \
     --dataset_path path \
@@ -110,7 +110,7 @@ python index/lsh_index.py \
  Simulates SketchJoin, given the query dataset and search dataset.<br>
  **Usage:**
  ```
- python discoverySketchJoin.py \
+ python discovery/FreqScout.py \
      --query_file query.csv \
      --query_column column_name \
      --dataset_path path \
