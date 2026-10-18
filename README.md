@@ -3,7 +3,8 @@
 ### Clone repository including submodules:
 use git clone --recursive 
 ### Requirements
-```pip install numpy pandas scikit-learn pickle```
+```pip install numpy pandas scikit-learn pickle pybind11```
+```pip install -e```
 ## Directory Structure 
 ```
 .
