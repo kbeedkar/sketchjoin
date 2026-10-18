@@ -1,11 +1,13 @@
 import pandas as pd
 import os
 import argparse
-from utils.cms_utils import CountMinSketch, CMS_WIDTH, CMS_DEPTH
-from utils.minhash_utils import cms_minhash_jaccard_similarity, minhash_signature_weighted_concatenated
+import numpy as np
+from utils.cms_utils import CountMinSketch, CMS_WIDTH, CMS_DEPTH ,cms_jaccard_similarity
+# from utils.minhash_utils import cms_minhash_jaccard_similarity, minhash_signature_weighted_concatenated
 from utils.lsh_utils import find_similar_signatures, find_optimal_bands
-from utils.utils import actual_jaccard_similarity, THRESHOLD, HASH_FUNCTIONS_PER_ROW, TOTAL_HASH_FUNCTIONS, PROBABILITY_OF_ERROR_LSH
+from utils.utils import actual_jaccard_similarity, THRESHOLD, TOTAL_HASH_FUNCTIONS, PROBABILITY_OF_ERROR_LSH
 import pickle
+import tmh_pybind
 
 
 if __name__ == "__main__":
@@ -22,22 +24,27 @@ if __name__ == "__main__":
     dataset_name = args.dataset_name
 
     input_minhash_folder = f"./minhash_signatures/{dataset_name}"
-
+    input_cms_folder=f"./cms_sketch/{dataset_name}"
     query_data = pd.read_csv(f'{dataset_path}/{query_file}', header=0, low_memory=False)[query_column].values
     query_cms = CountMinSketch(CMS_WIDTH, CMS_DEPTH)
+    query_minhash_signature=[]
     for value in query_data:
         if pd.isna(value) or value == "": continue
         else:
             query_cms.add(value)
 
-    query_signature = minhash_signature_weighted_concatenated(query_cms, HASH_FUNCTIONS_PER_ROW, CMS_WIDTH, CMS_DEPTH)
-
+    # query_signature = minhash_signature_weighted_concatenated(query_cms, HASH_FUNCTIONS_PER_ROW, CMS_WIDTH, CMS_DEPTH)
+    tmh_query_signature = tmh_pybind.build_signature_from_cms(
+                    query_cms.table, num_hashes=TOTAL_HASH_FUNCTIONS )
+    for hash_id,value in tmh_query_signature:
+        query_minhash_signature.append(hash_id)
     all_docs_id = []
     actual_doc_id = []
     cms_minhash_lsh_doc_id = []
 
     minhash_signatures = {}
     file_id = 1
+    id_to_cms_file_mapping={}
     for file in sorted(os.listdir(dataset_path)):
         file_path = os.path.join(dataset_path, file)
         try:
@@ -56,7 +63,8 @@ if __name__ == "__main__":
                 # cms minhash jaccard similarity
                 # read minhash signatures from file
                 file_safe_name = os.path.splitext(os.path.basename(file))[0]
-                input_filename = f"{file_safe_name}_{file_id}_{column_id}.txt"
+                input_filename = f"{file_safe_name}_{new_id}.txt"
+                id_to_cms_file_mapping[new_id]=f"{file_safe_name}_{new_id}.txt"
                 input_path = os.path.join(input_minhash_folder, input_filename)
 
                 signature_b = []
@@ -76,9 +84,15 @@ if __name__ == "__main__":
     with open(f'lsh_index_{dataset_name}.pkl', 'rb') as f:
         lsh_index = pickle.load(f)
     num_bands = find_optimal_bands(TOTAL_HASH_FUNCTIONS, THRESHOLD, PROBABILITY_OF_ERROR_LSH)
-    candidate_doc_ids = find_similar_signatures(query_signature, num_bands, lsh_index)
+    candidate_doc_ids = find_similar_signatures(query_minhash_signature, num_bands, lsh_index)
     for id in candidate_doc_ids:
-        estimated_jaccard_similarity = cms_minhash_jaccard_similarity(query_signature, minhash_signatures[id])
+        cms_file= os.path.join(input_cms_folder,id_to_cms_file_mapping[id])
+        print("cms_file",cms_file)
+        cms_b=CountMinSketch(CMS_WIDTH, CMS_DEPTH)
+        with open(cms_file, 'r') as f:
+                for i, line in enumerate(f):
+                    cms_b.table[i] = np.array(list(map(int, line.strip().split())))
+        estimated_jaccard_similarity = cms_jaccard_similarity(query_cms, cms_b,CMS_DEPTH,CMS_WIDTH)
         if estimated_jaccard_similarity > THRESHOLD:
             cms_minhash_lsh_doc_id.append(id)
 

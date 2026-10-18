@@ -1,0 +1,3 @@
+[submodule "cpp/treeminhash"]
+	path = cpp/treeminhash
+	url = https://github.com/oertl/treeminhash.git
