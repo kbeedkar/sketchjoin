@@ -1,11 +1,15 @@
 # FreqScout
 ## Installation
+### Clone repository including submodules:
+use git clone --recursive 
 ### Requirements
-
 ```pip install numpy pandas scikit-learn pickle```
 ## Directory Structure 
 ```
-. 
+.
+├── cpp/ 
+│   ├── treeminhash        # we use treeminhash to build minhash signatures 
+│   └── tmh_pybind.cpp    # helper functions to generate minhash signatures over cms
 ├── preprocessing/ 
 │   ├── cms_construction.py        # Build CMS over each dataset column 
 │   └── minhash_construction.py    # Generate MinHash signatures over CMS
@@ -18,8 +22,7 @@
 │   ├── LinearScanMinhash.py       # LinearScan with minhash sampling
 │   └── FreqScout.py              # FreqScout
 ├── utils/
-│   ├── cms_utils.py               # CMS utilities
-│   ├── minhash_utils.py           # MinHash utilities 
+│   ├── cms_utils.py               # CMS utilities 
 │   ├── utils.py                   # Configuration and general helpers
 |   └── lsh_utils.py               # LSH index utilities
 |   └──  minhash_vs_cms_utils.py   # Minhash Vs cms experiment utilities
