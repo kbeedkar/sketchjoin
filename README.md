@@ -1,7 +1,11 @@
 # FreqScout
 ## Installation
-### Clone repository including submodules:
-use git clone --recursive 
+FreqScout uses [TreeMinHash](https://github.com/oertl/treeminhash) for weighted MinHash computation. 
+While cloning the repository using Git, initialize the submodule with:
+```bash
+git clone --recursive <REPOSITORY_URL>
+```
+If you download the repository as a ZIP archive, ensure that the TreeMinHash source code is present in `cpp/treeminhash/`, download TreeMinHash separately from the repository linked above and place its contents in that directory.
 ### Requirements
 ```pip install numpy pandas scikit-learn pickle pybind11```
 ```pip install -e```
